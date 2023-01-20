@@ -12,6 +12,15 @@ function App() {
   const [tasks, setTasks] = useState(TASKS);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
+  // Event Handlers
+  function handleAddTask(newTask){
+    // Add new task to tasks state
+    setTasks([
+      ...tasks,
+      newTask
+    ])
+  }
+
   // Components
   const filteredTasks = tasks.filter((task) => selectedCategory==="All" ? true : task.category===selectedCategory
   );
@@ -19,9 +28,22 @@ function App() {
   return (
     <div className="App">
       <h2>My tasks</h2>
-      <CategoryFilter categories={CATEGORIES} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
-      <NewTaskForm />
-      <TaskList tasks={filteredTasks} setTasklist={setTasks}/>
+
+      <CategoryFilter
+        categories={CATEGORIES}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
+
+      <NewTaskForm
+        categories={CATEGORIES}
+        onTaskFormSubmit={handleAddTask}
+      />
+
+      <TaskList
+        tasks={filteredTasks}
+        setTasklist={setTasks}
+      />
     </div>
   );
 }
